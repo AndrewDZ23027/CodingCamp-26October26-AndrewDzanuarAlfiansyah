@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense & Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Chart.js for the pie chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <h1>💸 Expense &amp; Budget Visualizer</h1>
+        <button id="themeToggle" class="btn-theme" type="button" aria-label="Toggle dark mode">
+          <span class="theme-icon-dark">🌙</span>
+          <span class="theme-icon-light">☀️</span>
+        </button>
+      </div>
+      <p class="subtitle">Track your spending, see where your money goes</p>
+    </header>
+
+    <!-- Total Balance Card -->
+    <section class="balance-card" aria-label="Total balance">
+      <span class="balance-label">Total Balance</span>
+      <span id="totalBalance" class="balance-amount">Rp 0</span>
+      <span id="transactionCount" class="balance-meta">0 transactions</span>
+    </section>
+
+    <!-- Main grid: form + chart -->
+    <div class="main-grid">
+      <!-- Input Form -->
+      <section class="card form-card">
+        <h2>Add Transaction</h2>
+        <form id="expenseForm" novalidate>
+          <div class="form-group">
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" placeholder="e.g. Lunch at cafe" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="amount">Amount (Rp)</label>
+            <input type="number" id="amount" placeholder="e.g. 15000" step="1" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category">
+              <option value="">Select a category</option>
+            </select>
+            <div class="add-category-row">
+              <input type="text" id="newCategoryName" placeholder="Or add a new category" autocomplete="off" />
+              <button type="button" id="addCategoryBtn" class="btn-add-category" aria-label="Add category">+</button>
+            </div>
+            <p id="categoryError" class="form-error" role="alert"></p>
+          </div>
+          <button type="submit" class="btn-add">Add Transaction</button>
+          <p id="formError" class="form-error" role="alert"></p>
+        </form>
+      </section>
+
+      <!-- Pie Chart -->
+      <section class="card chart-card">
+        <h2>Spending by Category</h2>
+        <div class="chart-wrapper">
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div id="chartEmpty" class="chart-empty">
+          <p>No data yet. Add a transaction to see your spending breakdown.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Transaction List -->
+    <section class="card list-card">
+      <div class="list-header">
+        <h2>Transactions</h2>
+        <div class="list-controls">
+          <select id="sortBy" class="sort-select" aria-label="Sort transactions">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="amount-desc">Amount: High to Low</option>
+            <option value="amount-asc">Amount: Low to High</option>
+            <option value="category-asc">Category: A to Z</option>
+            <option value="category-desc">Category: Z to A</option>
+          </select>
+          <button id="clearAll" class="btn-clear" type="button">Clear All</button>
+        </div>
+      </div>
+      <div class="transaction-list" id="transactionList">
+        <div class="empty-state" id="emptyState">
+          <p>No transactions yet. Start by adding one above!</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Data is stored locally in your browser.</p>
+    </footer>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
